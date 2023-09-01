@@ -1,30 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameStateManager : MonoBehaviour
+public enum GameState : byte
 {
-    public TextMeshProUGUI WinnerText;
-    
-    void OnTriggerEnter2D(Collider2D other)
+    NotStarted,
+    Started,
+    Finished
+}
+
+public class GameStateManager
+{
+    private GameState currentGameState = GameState.NotStarted;
+    public GameState CurrentGameState
     {
-        if (other.gameObject.CompareTag("Player"))
+        get => currentGameState;
+        private set
         {
-            WinnerText.text = "You win!!!";
-            Destroy(other.gameObject);
+            currentGameState = value;
+            GameStateChanged?.Invoke(value);
         }
     }
+    public event Action<GameState> GameStateChanged;
     
-    // Start is called before the first frame update
-    void Start()
+    private CoinService coinService;
+    public GameStateManager()
     {
-        
+        coinService = ServiceContainer.CoinService;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartGame()
     {
-        
+        CurrentGameState = GameState.Started;
+        coinService.ResetCoins();
+        SceneManager.LoadScene("FirstLevel");
     }
+
+    public void FinishGame()
+    {
+        CurrentGameState = GameState.Finished;
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+    
 }

@@ -2484,10 +2484,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1619578238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9ba52afe42305d4e983f57184fa0f29, type: 3}
+  m_Script: {fileID: 11500000, guid: e6dd647082d99dc47814023e55ae56cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WinnerText: {fileID: 1800337104}
 --- !u!1 &1799555856
 GameObject:
   m_ObjectHideFlags: 0
